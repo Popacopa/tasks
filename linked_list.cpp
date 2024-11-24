@@ -62,8 +62,6 @@ public:
             Node* ptr = get_node(index - 1);
             obj->next = ptr->next;
             ptr->next = obj;
-            /* obj->next = begin;
-            begin = obj; */ 
         }
         return 0;
     }
@@ -116,4 +114,5 @@ private:
     Node* begin;
     Node* end;
 };
+
 
