@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream> 
 #include <stdexcept>
+
 class Node {
 public:
     Node(int _data) : data(_data), next(nullptr) {}
@@ -10,16 +11,6 @@ public:
 
 class List {
 public:
-    List() : begin(nullptr), end(nullptr) {}
-    ~List() {
-        while (begin != nullptr) {
-            Node* temp = begin;
-            begin = begin->next;
-            delete temp;
-        }
-        end = nullptr;
-    }
-
     void print() {
         if (is_empty()) {
             std::cout << "elements do not exist!\n";
@@ -43,13 +34,7 @@ public:
     }
 
     Node* get_node(int index) const {
-        if (index < 0) {
-            //throw std::out_of_range("Index out of range");
-            return begin;
-        } else if (index > len()) {
-            //throw std::out_of_range("Index out of range");
-            return end;
-        }
+        if (!(0 < index <= len())) {return nullptr;}
         Node* ptr = begin;
         for (int i = 0; i < index; ++i) {
             ptr = ptr->next;
@@ -58,19 +43,18 @@ public:
     }
 
     int append(int _data) {
-        try {
-            Node* obj = new Node(_data);
+        Node* obj = new Node(_data);
         if (is_empty()) {
             begin = end = obj;
         } else {
             end->next = obj;
             end = obj;
-        } 
-        } catch (const std::exception& e) {std::cerr << e.what();}
-        return 0;
+            return 0;
+        }   
     }
 
-    Node* insert(int _data, int index) {
+    int insert(int _data, int index) {
+        if (!(0 < index <= len())) {return -1;}
         Node* obj = new Node(_data);
         if (is_empty()) {
             begin = end = obj;
@@ -81,10 +65,10 @@ public:
             /* obj->next = begin;
             begin = obj; */ 
         }
-        return obj;
+        return 0;
     }
 
-    void cut() {
+    int cut() {
         if (!is_empty()) {
             Node* buffer = begin;
             begin = begin->next;
@@ -92,6 +76,9 @@ public:
             if (begin == nullptr) {
                 end = nullptr;
             }
+            return 0;
+        } else {
+            return -1;
         }
     }
     int pop(int x) {
@@ -110,6 +97,16 @@ public:
             if (value == node->data) {return node;}
         }
         return new Node(-1);
+    }
+     
+    List() : begin(nullptr), end(nullptr) {}
+    ~List() {
+        while (begin != nullptr) {
+            Node* temp = begin;
+            begin = begin->next;
+            delete temp;
+        }
+        end = nullptr;
     }
 private:
     bool is_empty() {
