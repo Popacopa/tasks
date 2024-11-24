@@ -2,6 +2,10 @@
 #include <fstream> 
 #include <stdexcept>
 
+/*
+ * класс Node - это элемент линейного списка
+ * он хранит данные и указатель на следующий Node
+ */
 class Node {
 public:
     Node(int _data) : data(_data), next(nullptr) {}
@@ -9,8 +13,14 @@ public:
     Node* next;
 };
 
+/*
+ * класс List - это линейный список
+ */
 class List {
 public:
+    /*
+     * функция print - выводит все элементы списка
+     */
     void print() {
         if (is_empty()) {
             std::cout << "elements do not exist!\n";
@@ -23,6 +33,9 @@ public:
         }
     }
 
+    /*
+     * функция len - возвращает количество элементов списка
+     */
     int len() const {
         int length = 0;
         Node* ptr = begin;
@@ -33,6 +46,9 @@ public:
         return length;
     }
 
+    /*
+     * функция get_node - возвращает указатель на node по индексу
+     */
     Node* get_node(int index) const {
         if (!(0 < index <= len())) {return nullptr;}
         Node* ptr = begin;
@@ -42,6 +58,9 @@ public:
         return ptr;
     }
 
+    /*
+     * функция append - добавляет новый Node в конец списка
+     */
     int append(int _data) {
         Node* obj = new Node(_data);
         if (is_empty()) {
@@ -53,6 +72,9 @@ public:
         }   
     }
 
+    /*
+     * функция insert - добавляет новый Node в список
+     */
     int insert(int _data, int index) {
         if (!(0 < index <= len())) {return -1;}
         Node* obj = new Node(_data);
@@ -66,6 +88,9 @@ public:
         return 0;
     }
 
+    /*
+     * функция cut - удаляет Node из начала списка
+     */
     int cut() {
         if (!is_empty()) {
             Node* buffer = begin;
@@ -79,6 +104,9 @@ public:
             return -1;
         }
     }
+    /*
+     * функция pop - удаляет Node по индексу
+     */
     int pop(int x) {
         if (x < 0 || x >= len()) {return -1;} 
         else {
@@ -89,6 +117,10 @@ public:
             return 0;
         }
     }
+
+    /*
+     * функция search - ищет Node по значению
+     */
     Node* search(int value) {
         for (int i{}; i < len(); i++) {
             Node* node = get_node(i);
@@ -114,5 +146,4 @@ private:
     Node* begin;
     Node* end;
 };
-
 
