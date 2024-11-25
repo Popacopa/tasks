@@ -5,15 +5,13 @@
 class BigInt {
 public:
     List data_;
-    BigInt operator=(int x) {
-       BigInt res;
-        int i{1};
+    BigInt& operator=(const int& val) {
+        int x = val;
         int osn = 10;
-        while (x /  osn != 0) {
+        while (x >= osn / 10) {
             data_.insert(x % osn, 0);
-            i++;
-            osn *= 10;
+            x /= osn;
         }
-        return res;
+        return *this;
     }
 };
