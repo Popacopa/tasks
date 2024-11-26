@@ -13,8 +13,7 @@ public:
     Node* next_;
 };
 
-class List {
-public:
+struct List {
     void print() {
         if (is_empty()) {
             std::cout << "elements do not exist!\n";
@@ -30,6 +29,7 @@ public:
     int len() const {
         int length = 0;
         Node* ptr = begin;
+        if (ptr == nullptr) {return 0;}
         while (ptr != nullptr) {
             ++length;
             ptr = ptr->next_;
@@ -54,19 +54,20 @@ public:
         return new Node(-1);
     }
 
-    void append(int data) {
+    int append(int data) {
         Node* new_node = new Node(data);
         if (is_empty()) {
             begin = end = new_node;
         } else {
             end->next_ = new_node;
             end = new_node;
+            return 0;
         }   
     }
 
-    int insert(int _data, int index = 0) {
+    int insert(int data, int index = 0) {
         if (!(0 < index <= len())) {return -1;}
-        Node* obj = new Node(_data);
+        Node* obj = new Node(data);
         if (is_empty()) {
             begin = end = obj;
         } else if (index == 0){
@@ -94,7 +95,16 @@ public:
         }
     }
 
-    int pop_end(int index) {
+    void del() {
+    while (begin != nullptr) {
+        Node* temp = begin;
+        begin = begin->next_;
+        delete temp;
+    }
+    end = nullptr;
+}
+    
+    int pop(int index) {
         if (index < 0 || index >= len()) {return -1;} 
         else {
             Node* ptr = get_node(index - 1);
@@ -107,18 +117,13 @@ public:
      
     List() : begin(nullptr), end(nullptr) {}
     ~List() {
-        while (begin != nullptr) {
-            Node* temp = begin;
-            begin = begin->next_;
-            delete temp;
-        }
-        end = nullptr;
+        del();
     }
-private:
+
     bool is_empty() {
         if (len() == 0) {return true;} else {return false;}
     }
-
+    
     Node* begin;
     Node* end;
 };
