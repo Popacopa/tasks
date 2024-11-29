@@ -11,7 +11,7 @@ struct Edge {
     int to; // куда
 };
 
-// структура графа
+// структура графа 
 struct Graph {
     std::vector<std::list<Edge>> adj; // список смежности
     int size; // количество вершин
