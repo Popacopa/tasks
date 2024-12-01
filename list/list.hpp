@@ -46,6 +46,18 @@ struct List {
         return ptr;
     }
 
+    Node* operator[] (const unsigned int& index) const {
+        Node* ptr = begin;
+        if (!0 <= index < len()) {return nullptr;}
+        for (int i = 0; i < len(); i++) {
+            if (i == index) {
+                return ptr;
+            }
+            ptr = ptr->next_;
+        }
+        return nullptr;
+    }
+
     Node* search(int value) {
         for (int i{}; i < len(); i++) {
             Node* node = get_node(i);
