@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream> 
 #include <stdexcept>
+#include <cmath>
 
 class Node {
 public:
@@ -46,13 +47,17 @@ struct List {
         return ptr;
     }
 
-    Node* operator[] (const unsigned int& index) const {
+    Node* operator[] (const int& index) const {
         Node* ptr = begin;
-        if (!0 <= index < len()) {return nullptr;}
-        for (int i = 0; i < len(); i++) {
-            if (i == index) {
-                return ptr;
+        if (std::abs(index) > len() || index >= len()) {return begin;}
+        if (index < 0) {
+            for (int i = 0 - len(); i < 0; i++) {
+                if (i == index) {return ptr;}
+                ptr = ptr->next_;
             }
+        }
+        for (int i = 0; i < len(); i++) {
+            if (i == index) {return ptr;}
             ptr = ptr->next_;
         }
         return nullptr;
@@ -66,14 +71,13 @@ struct List {
         return new Node(-1);
     }
 
-    int append(int data) {
+    void append(int data) {
         Node* new_node = new Node(data);
         if (is_empty()) {
             begin = end = new_node;
         } else {
             end->next_ = new_node;
             end = new_node;
-            return 0;
         }   
     }
 
