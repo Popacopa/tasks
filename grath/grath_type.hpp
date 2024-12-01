@@ -15,7 +15,7 @@ struct Edge {
 struct Graph {
     std::vector<std::list<Edge>> adj; // список смежности
     int size; // количество вершин
-
+ 
     Graph(int n) : adj(n), size(n) {} // сигнатура графа
 
     // добавить ребро
@@ -36,4 +36,5 @@ struct Graph {
 };
 
 #endif
+
 
