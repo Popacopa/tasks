@@ -1,4 +1,3 @@
 *.dSYM
 *.out
-grath/
-test
+test.*
