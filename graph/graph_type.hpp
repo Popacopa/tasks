@@ -5,27 +5,24 @@
 #include <vector>
 #include <list>
 
-// структура ребра графа
 struct Edge {
-    int from; // откуда
-    int to; // куда
+    int from;
+    int to;
 };
 
-// структура графа 
 struct Graph {
-    std::vector<std::list<Edge>> adj; // список смежности
-    int size; // количество вершин
- 
-    Graph(int n) : adj(n), size(n) {} // сигнатура графа
+    std::vector<std::list<Edge>> adj;
+    int size;
 
-    // добавить ребро
+    Graph(int n) : adj(n), size(n) {}
+
     void addEdge(int from, int to) {
-        adj[from].push_back({from, to}); // проброс ссылок на элементы графа
+        adj[from].push_back({from, to});
         adj[to].push_back({to, from});
     }
 
     void print() const {
-        for (int i{}; i < size; ++i) { // вывод графа
+        for (int i = 0; i < size; ++i) {
             std::cout << i << " -> ";
             for (const auto& edge : adj[i]) {
                 std::cout << edge.to << " ";
@@ -36,5 +33,4 @@ struct Graph {
 };
 
 #endif
-
 
