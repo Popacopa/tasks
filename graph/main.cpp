@@ -46,7 +46,6 @@ int main(int argc, char const *argv[])
         std::cout << "\n";
         buid_graph(size, mat, graph);
     } else {
-
         std::ifstream file;
         file.open("table.txt");
         std::string l;
