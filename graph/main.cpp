@@ -46,8 +46,10 @@ int main(int argc, char const *argv[])
         std::cout << "\n";
         buid_graph(size, mat, graph);
     } else {
+        std::string path;
+        std::cout << "путь к файлу: "; std::cin >> path;
         std::ifstream file;
-        file.open("table.txt");
+        file.open(path);
         std::string l;
         std::getline(file, l);
         std::stringstream ss(l);
