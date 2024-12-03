@@ -1,5 +1,6 @@
 #include "graph_type.hpp"
 #include <vector>
+#include <fstream>
 
 Graph* graph = nullptr;
 std::vector<std::vector<bool>> mat;
@@ -46,7 +47,11 @@ int main(int argc, char const *argv[])
         std::cout << "\n";
         buid_graph(size, mat, graph);
     } else {
-        //just wait ¯\_(ツ)_/¯
+        std::ifstream file;
+        file.open("table.txt");
+        std::string l;
+        while (std::getline(file, l)) {std::cout << l << "\n";}
+        file.close();
     }
 }
 
