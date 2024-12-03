@@ -1,21 +1,16 @@
 #include <iostream>
 #include <fstream>
-int main(int argc, char const *argv[])
+
+int main()
 {
     std::ifstream infile;
-    std::ofstream ofile_h;
-    std::ofstream ofile_g;
+    std::ofstream ofile_g, ofile_h;
     infile.open("./tmp/f.txt");
     ofile_g.open("./tmp/g.txt");
     ofile_h.open("./tmp/h.txt");
     std::string l;
     while (std::getline(infile, l)) {
-        if (l.length() == 2) {
-            ofile_g << l << "\n";
-        }
-        if (l.length() == 1) {
-            ofile_h << l << "\n";
-        }
+        l.length() == 2 ? ofile_g << l << "\n" : ofile_h << l << "\n";
     }
     ofile_g.close();
     ofile_h.close();
