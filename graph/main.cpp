@@ -1,37 +1,36 @@
 #include "graph_type.hpp"
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 Graph* graph = nullptr;
-std::vector<std::vector<bool>> mat;
+bool** mat = nullptr;
 
-void input(unsigned int& size, std::vector<std::vector<bool>>& mat) {
+void input(unsigned int& size, bool** mat) {
     for (int y = 0; y < size; y++) {  
         std::cout << y + 1 << " строка:\n";
         for (int x = 0; x < size; x++) {
-            bool cache;  
-            std::cout << ">"; std::cin >> cache;
-            mat[y][x] = cache;
+            std::cout << ">"; std::cin >> mat[y][x];
         }
     }
 }
 
-void buid_graph(unsigned int& size, std::vector<std::vector<bool>> mat, Graph* graph) {
+void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
     for (int y = 0; y < size; y++) {  
         for (int x = 0; x < size; x++) { 
-            //std::cout <<  mat[y][x] << (x + 1 == size ? "\n" : "");
             if (mat[y][x]) {
                 graph->addEdge(y, x);
             }
         }
     }
+    delete mat;
     graph->print();
 }
+
 void init(unsigned int& size) {
     graph = new Graph(size);
-    std::vector<bool> temp;
-    for (int i{}; i < size; i++) {temp.push_back(0);}
-    for (int i{}; i < size; i++) {mat.push_back(temp);}
+    mat = new bool*[size];
+    for (int i = 0; i < size; i++) {mat[i] = new bool[size];}
 }
 
 int main(int argc, char const *argv[])
@@ -47,10 +46,20 @@ int main(int argc, char const *argv[])
         std::cout << "\n";
         buid_graph(size, mat, graph);
     } else {
+
         std::ifstream file;
         file.open("table.txt");
         std::string l;
-        while (std::getline(file, l)) {std::cout << l << "\n";}
+        std::getline(file, l);
+        std::stringstream ss(l);
+        ss >> size;
+        init(size);
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                file >> mat[y][x];
+            }
+        }
+        buid_graph(size, mat, graph);
         file.close();
     }
 }
