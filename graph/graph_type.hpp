@@ -18,7 +18,7 @@ struct Graph {
 
     void addEdge(int from, int to) {
         adj[from].push_back({from, to});
-        adj[to].push_back({to, from});
+        //adj[to].push_back({to, from});
     }
 
     void print() const {
