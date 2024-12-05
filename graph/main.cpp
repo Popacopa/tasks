@@ -28,7 +28,7 @@ void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
     std::cout << "\n";
     graph->lists_of_incidents();
     std::cout << "\n";
-    graph->incident_matrix();
+    graph->buildIncidenceMatrix();
 }
 
 void init(unsigned int& size) {
