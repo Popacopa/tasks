@@ -24,7 +24,11 @@ void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
         }
     }
     delete mat;
-    graph->print();
+    graph->adjacency_list();
+    std::cout << "\n";
+    graph->lists_of_incidents();
+    std::cout << "\n";
+    graph->incident_matrix();
 }
 
 void init(unsigned int& size) {
@@ -49,7 +53,7 @@ int main(int argc, char const *argv[])
         std::string path;
         std::cout << "путь к файлу: "; std::cin >> path;
         std::ifstream file;
-        file.open(path);
+        path == "./" ? file.open("./table.txt") : file.open(path);
         std::string l;
         std::getline(file, l);
         std::stringstream ss(l);
