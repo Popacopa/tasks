@@ -1,33 +1,31 @@
-#ifndef GRATH_CPP
-#define GRATH_CPP
+#ifndef GRAPH_CPP
+#define GRAPH_CPP
 
 #include <iostream>
 #include <vector>
 #include <list>
-#include <set>
 #include <unordered_map>
 #include <unordered_set>
 
+typedef std::unordered_map<int, std::unordered_set<int>> edges;
+
+struct Edge {
+    int from;
+    int to;
+};
 
 struct Graph {
-    struct Edge {
-        //Edge(){num++;}
-        int from;
-        int to;
-         //static int num;
-    };
 
-    typedef std::vector<std::list<Edge>> data;
-    data adj;
-    int size;
+    typedef std::vector<std::list<Edge>> Graph_data;
+
+    Graph_data adj;
+    int size; 
 
     Graph(int n) : adj(n), size(n) {
     }
 
     int count_edge() const {
-        std::set<Edge> cache;
         int edgecount = 0;
-        //std::set<Edge>::iterator it = cache.begin();
         for (const auto& core : adj) {
              edgecount += core.size();
         }
@@ -60,38 +58,36 @@ struct Graph {
         }
     }
 
-    void buildIncidenceMatrix() {
-    int numVertices = adj.size();
-    std::unordered_map<int, std::unordered_set<int>> edgeMap;
+    void Incidence_Matrix() {
+        //int numVertices = adj.size();
+        edges edgeMap;
 
-    // Создаем уникальные идентификаторы для ребер
-    int edgeId = 0;
-    for (int u = 0; u < numVertices; ++u) {
-        for (const auto& edge : adj[u]) {
-            int v = edge.to;
-            if (u < v) {  // Для неориентированного графа учитываем ребро только один раз
-                edgeMap[u].insert(edgeId);
-                edgeMap[v].insert(edgeId);
-                ++edgeId;
+        int edgeId = 0;
+        for (int u = 0; u < size; ++u) {
+            for (const auto& edge : adj[u]) {
+                int v = edge.to;
+                if (u < v) {  // Для неориентированного графа учитываем ребро только один раз
+                    edgeMap[u].insert(edgeId);
+                    edgeMap[v].insert(edgeId);
+                    ++edgeId;
+                }
+            }
+        }
+
+        int numEdges = edgeId;
+        std::vector<std::vector<int>> incMatrix(size, std::vector<int>(numEdges, 0));
+ 
+        for (int u = 0; u < size; ++u) {
+            for (int edgeId : edgeMap[u]) {
+                incMatrix[u][edgeId] = 1;
+            }
+        }
+        for (int y = 0; y < incMatrix.size(); y++) {
+            for (int x = 0; x < incMatrix[0].size(); x++) {
+                std::cout << incMatrix[y][x] << (x + 1 == incMatrix[0].size() ? "\n" : " ");
             }
         }
     }
-
-    int numEdges = edgeId;
-    std::vector<std::vector<int>> incidenceMatrix(numVertices, std::vector<int>(numEdges, 0));
-
-    // Заполняем матрицу инцидентности
-    for (int u = 0; u < numVertices; ++u) {
-        for (int edgeId : edgeMap[u]) {
-            incidenceMatrix[u][edgeId] = 1;
-        }
-    }
-    for (int y = 0; y < incidenceMatrix.size(); y++) {
-        for (int x = 0; x < incidenceMatrix[0].size(); x++) {
-            std::cout << incidenceMatrix[y][x] << (x + 1 == incidenceMatrix[0].size() ? "\n" : " ");
-        }
-    }
-}
 };
 
 #endif

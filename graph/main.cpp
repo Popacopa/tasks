@@ -15,6 +15,7 @@ void input(unsigned int& size, bool** mat) {
     }
 }
 
+
 void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
     for (int y = 0; y < size; y++) {  
         for (int x = 0; x < size; x++) { 
@@ -28,7 +29,7 @@ void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
     std::cout << "\n";
     graph->lists_of_incidents();
     std::cout << "\n";
-    graph->buildIncidenceMatrix();
+    graph->Incidence_Matrix();
 }
 
 void init(unsigned int& size) {
