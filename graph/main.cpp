@@ -1,4 +1,6 @@
+#include <iostream>
 #include "graph_type.hpp"
+#include "print_class.cpp"
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -15,7 +17,6 @@ void input(unsigned int& size, bool** mat) {
     }
 }
 
-
 void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
     for (int y = 0; y < size; y++) {  
         for (int x = 0; x < size; x++) { 
@@ -25,11 +26,9 @@ void buid_graph(unsigned int& size, bool** mat, Graph* graph) {
         }
     }
     delete mat;
-    graph->adjacency_list();
-    std::cout << "\n";
-    graph->lists_of_incidents();
-    std::cout << "\n";
-    graph->Incidence_Matrix();
+    print(size, graph, "adjacency list");  std::cout << "\n";
+    print(size, graph, "lists of incidents");  std::cout << "\n";
+    print(size, graph, "Incidence Matrix");
 }
 
 void init(unsigned int& size) {
